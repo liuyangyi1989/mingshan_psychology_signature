@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知情同意书系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- 主页面 -->
+    <div id="main-page" class="page active">
+        <div class="main-container">
+            <h1>知情同意书系统</h1>
+            <p class="subtitle">请选择您需要签署的同意书类型</p>
+            
+            <div class="button-container">
+                <button class="consent-btn" onclick="showConsentPage('counseling')">
+                    咨询知情同意
+                </button>
+                <button class="consent-btn" onclick="showConsentPage('recording')">
+                    录音录像知情同意
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 同意书页面 -->
+    <div id="consent-page" class="page">
+        <div class="consent-container">
+            <div class="header">
+                <button class="back-btn" onclick="showMainPage()">← 返回</button>
+                <h2 id="consent-title"></h2>
+            </div>
+            
+            <div class="content-container">
+                <!-- 咨询知情同意书 -->
+                <div id="counseling-content" class="consent-content">
+                    <h3>心理咨询知情同意书</h3>
+                    <p>尊敬的来访者：</p>
+                    <p>欢迎您来到我们的心理咨询服务中心。为了保障您的权益，确保咨询过程的专业性和有效性，我们特向您提供以下知情同意信息，请您仔细阅读并签署。</p>
+                    
+                    <h4>一、咨询的性质和目标</h4>
+                    <p>心理咨询是一种专业的助人活动，旨在通过咨询师与来访者之间的专业关系，帮助您解决心理困扰，促进心理健康，提高生活质量。咨询的目标是帮助您更好地理解自己的情绪、思维和行为模式，增强应对问题的能力，实现个人成长。</p>
+                    
+                    <h4>二、咨询的基本原则</h4>
+                    <p>1. 保密性原则：咨询师将严格保护您的个人信息和咨询内容，未经您的书面许可，不会向任何第三方透露。但在以下情况下，咨询师可能需要打破保密：</p>
+                    <ul>
+                        <li>您有自伤或伤人的危险</li>
+                        <li>涉及法律诉讼</li>
+                        <li>儿童或老年人受到虐待</li>
+                    </ul>
+                    <p>2. 自愿性原则：您有权随时终止咨询，无需说明理由。</p>
+                    <p>3. 专业性原则：咨询师将以专业的态度和方法为您提供服务，不会利用咨询关系谋取私利。</p>
+                    
+                    <h4>三、咨询的过程和时间</h4>
+                    <p>1. 初始评估：首次咨询将主要用于了解您的基本情况、问题背景和咨询目标。</p>
+                    <p>2. 咨询频率：通常为每周1-2次，每次50-60分钟。</p>
+                    <p>3. 咨询期限：根据您的具体情况和需求而定，可能需要短期（4-8次）或长期（数月至数年）的咨询。</p>
+                    
+                    <h4>四、您的权利和责任</h4>
+                    <p>1. 权利：</p>
+                    <ul>
+                        <li>了解咨询师的专业背景和资质</li>
+                        <li>提出关于咨询过程的问题和建议</li>
+                        <li>对咨询内容和方式有选择权</li>
+                        <li>在感到不适时随时终止咨询</li>
+                    </ul>
+                    <p>2. 责任：</p>
+                    <ul>
+                        <li>按时参加咨询，如需取消请提前24小时通知</li>
+                        <li>真诚地表达自己的感受和想法</li>
+                        <li>积极参与咨询过程，完成必要的作业</li>
+                        <li>为咨询费用按时付费</li>
+                    </ul>
+                    
+                    <h4>五、咨询费用</h4>
+                    <p>咨询费用为每小时[具体金额]元，首次咨询后需预付后续咨询费用。如需取消或改期，请提前24小时通知，否则将收取全额费用。</p>
+                    
+                    <h4>六、紧急情况处理</h4>
+                    <p>心理咨询不是紧急干预服务。如果您面临紧急情况（如自杀倾向、严重的心理危机），请立即联系：</p>
+                    <ul>
+                        <li>心理危机干预热线：[电话号码]</li>
+                        <li>紧急救援：120</li>
+                        <li>警方：110</li>
+                    </ul>
+                    
+                    <h4>七、其他事项</h4>
+                    <p>1. 咨询过程中，咨询师可能会做一些记录，这些记录将严格保密。</p>
+                    <p>2. 如您需要转介或其他服务，咨询师将为您提供相关信息和建议。</p>
+                    <p>3. 本知情同意书的内容可能会根据具体情况进行调整，如有变更，咨询师会及时通知您。</p>
+                    
+                    <p>我已仔细阅读并理解上述内容，同意接受心理咨询服务。</p>
+                </div>
+                
+                <!-- 录音录像知情同意书 -->
+                <div id="recording-content" class="consent-content">
+                    <h3>录音录像知情同意书</h3>
+                    <p>尊敬的来访者：</p>
+                    <p>为了确保心理咨询过程的专业性和有效性，同时为了咨询师的专业成长和案例研讨，我们可能会对咨询过程进行录音或录像。现将相关事宜告知如下，请您仔细阅读并签署。</p>
+                    
+                    <h4>一、录音录像的目的</h4>
+                    <p>1. 用于咨询师的个案分析和专业督导</p>
+                    <p>2. 用于咨询师的专业培训和自我提升</p>
+                    <p>3. 用于学术研究（如需使用于公开发表，将严格匿名处理）</p>
+                    <p>4. 用于来访者回顾咨询内容（如您有此需求）</p>
+                    
+                    <h4>二、录音录像的使用范围</h4>
+                    <p>1. 仅在专业督导和培训场合使用</p>
+                    <p>2. 仅由参与督导的专业人员查看</p>
+                    <p>3. 如需用于其他目的，需另行获得您的书面许可</p>
+                    
+                    <h4>三、保密措施</h4>
+                    <p>1. 所有录音录像资料将严格保密，存储在安全的设备中</p>
+                    <p>2. 资料的使用将采取匿名方式，隐去您的个人识别信息</p>
+                    <p>3. 如您要求，可在咨询结束后删除相关资料</p>
+                    
+                    <h4>四、您的权利</h4>
+                    <p>1. 您有权拒绝录音录像</p>
+                    <p>2. 您有权在任何时候要求停止录音录像</p>
+                    <p>3. 您有权要求删除已录制的资料</p>
+                    <p>4. 您有权了解录音录像的具体使用情况</p>
+                    
+                    <h4>五、其他事项</h4>
+                    <p>1. 录音录像不会影响咨询的正常进行</p>
+                    <p>2. 如您对录音录像有任何疑问，可随时向咨询师咨询</p>
+                    <p>3. 本同意书的内容可能会根据具体情况进行调整，如有变更，咨询师会及时通知您</p>
+                    
+                    <p>我已仔细阅读并理解上述内容，同意在咨询过程中进行录音录像。</p>
+                </div>
+            </div>
+            
+            <div class="signature-section">
+                <h4>签名确认</h4>
+                
+                <div class="signature-container">
+                    <div class="signature-item">
+                        <label>来访签名</label>
+                        <canvas id="client-signature" class="signature-canvas"></canvas>
+                        <div class="signature-controls">
+                            <button class="control-btn" onclick="clearSignature('client')">清除</button>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-item">
+                        <label>咨询师签名</label>
+                        <canvas id="counselor-signature" class="signature-canvas"></canvas>
+                        <div class="signature-controls">
+                            <button class="control-btn" onclick="clearSignature('counselor')">清除</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="preview-btn" onclick="showPreviewPage()">预览并导出</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 预览页面 -->
+    <div id="preview-page" class="page">
+        <div class="preview-container">
+            <div class="header">
+                <button class="back-btn" onclick="showConsentPage(currentConsentType)">← 返回</button>
+                <h2>预览与导出</h2>
+            </div>
+            
+            <div class="preview-content" id="preview-content">
+                <!-- 预览内容将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportAsImage()">导出为图片</button>
+                <button class="export-btn" onclick="exportAsPDF()">导出为PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
