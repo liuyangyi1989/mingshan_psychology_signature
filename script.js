@@ -4,12 +4,15 @@
 
 // 全局变量
 let currentConsentType = '';
+let currentSignatureType = '';
 let clientSignatureCanvas = null;
 let counselorSignatureCanvas = null;
+let landscapeCanvas = null;
 let clientCtx = null;
 let counselorCtx = null;
-let isDrawing = { client: false, counselor: false };
-let lastPos = { client: { x: 0, y: 0 }, counselor: { x: 0, y: 0 } };
+let landscapeCtx = null;
+let isDrawing = { client: false, counselor: false, landscape: false };
+let lastPos = { client: { x: 0, y: 0 }, counselor: { x: 0, y: 0 }, landscape: { x: 0, y: 0 } };
 let isExporting = false;
 
 // 页面加载完成后初始化
@@ -46,6 +49,14 @@ function initSignatureCanvases() {
         counselorCtx = counselorSignatureCanvas.getContext('2d');
         resizeCanvas(counselorSignatureCanvas);
         setupCanvasEvents(counselorSignatureCanvas, 'counselor');
+    }
+    
+    // 初始化横屏签名画布
+    landscapeCanvas = document.getElementById('landscape-canvas');
+    if (landscapeCanvas) {
+        landscapeCtx = landscapeCanvas.getContext('2d');
+        resizeCanvas(landscapeCanvas);
+        setupCanvasEvents(landscapeCanvas, 'landscape');
     }
 }
 
@@ -100,7 +111,15 @@ function setupCanvasEvents(canvas, type) {
  */
 function startDrawing(e, type) {
     isDrawing[type] = true;
-    const rect = (type === 'client' ? clientSignatureCanvas : counselorSignatureCanvas).getBoundingClientRect();
+    let canvas;
+    if (type === 'client') {
+        canvas = clientSignatureCanvas;
+    } else if (type === 'counselor') {
+        canvas = counselorSignatureCanvas;
+    } else if (type === 'landscape') {
+        canvas = landscapeCanvas;
+    }
+    const rect = canvas.getBoundingClientRect();
     lastPos[type] = {
         x: e.clientX - rect.left,
         y: e.clientY - rect.top
@@ -113,8 +132,18 @@ function startDrawing(e, type) {
 function draw(e, type) {
     if (!isDrawing[type]) return;
     
-    const canvas = type === 'client' ? clientSignatureCanvas : counselorSignatureCanvas;
-    const ctx = type === 'client' ? clientCtx : counselorCtx;
+    let canvas, ctx;
+    if (type === 'client') {
+        canvas = clientSignatureCanvas;
+        ctx = clientCtx;
+    } else if (type === 'counselor') {
+        canvas = counselorSignatureCanvas;
+        ctx = counselorCtx;
+    } else if (type === 'landscape') {
+        canvas = landscapeCanvas;
+        ctx = landscapeCtx;
+    }
+    
     const rect = canvas.getBoundingClientRect();
     const currentPos = {
         x: e.clientX - rect.left,
@@ -158,6 +187,104 @@ function clearSignature(type) {
 }
 
 /**
+ * 清除所有签名
+ */
+function clearAllSignatures() {
+    clearSignature('client');
+    clearSignature('counselor');
+}
+
+/**
+ * 打开横屏签名模态框
+ */
+function openSignatureModal(type) {
+    currentSignatureType = type;
+    
+    // 显示模态框
+    const modal = document.getElementById('signature-modal');
+    modal.classList.add('show');
+    
+    // 重新初始化横屏画布
+    setTimeout(() => {
+        // 获取横屏画布元素
+        landscapeCanvas = document.getElementById('landscape-canvas');
+        if (landscapeCanvas) {
+            // 初始化上下文
+            landscapeCtx = landscapeCanvas.getContext('2d');
+            // 调整大小
+            resizeCanvas(landscapeCanvas);
+            // 重新设置事件监听器
+            setupCanvasEvents(landscapeCanvas, 'landscape');
+            // 清除画布
+            landscapeCtx.clearRect(0, 0, landscapeCanvas.width, landscapeCanvas.height);
+        }
+    }, 200);
+}
+
+/**
+ * 关闭横屏签名模态框
+ */
+function closeSignatureModal() {
+    const modal = document.getElementById('signature-modal');
+    modal.classList.remove('show');
+    currentSignatureType = '';
+}
+
+/**
+ * 清除横屏签名
+ */
+function clearLandscapeSignature() {
+    if (landscapeCtx) {
+        landscapeCtx.clearRect(0, 0, landscapeCanvas.width, landscapeCanvas.height);
+    }
+}
+
+/**
+ * 确认横屏签名
+ */
+function confirmLandscapeSignature() {
+    if (!currentSignatureType) return;
+    
+    // 获取目标画布和上下文
+    const targetCanvas = currentSignatureType === 'client' ? clientSignatureCanvas : counselorSignatureCanvas;
+    const targetCtx = currentSignatureType === 'client' ? clientCtx : counselorCtx;
+    
+    // 清除目标画布
+    targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+    
+    // 将横屏画布内容绘制到目标画布
+    const scaleX = targetCanvas.width / landscapeCanvas.width;
+    const scaleY = targetCanvas.height / landscapeCanvas.height;
+    targetCtx.scale(scaleX, scaleY);
+    targetCtx.drawImage(landscapeCanvas, 0, 0);
+    targetCtx.setTransform(1, 0, 0, 1, 0, 0);
+    
+    // 更新目标画布样式
+    targetCanvas.style.borderColor = '#27ae60';
+    targetCanvas.style.boxShadow = '0 0 0 2px rgba(39, 174, 96, 0.2)';
+    
+    // 关闭模态框
+    closeSignatureModal();
+}
+
+/**
+ * 确认签名
+ */
+function confirmSignatures() {
+    // 验证签名
+    const clientHasSignature = isCanvasEmpty(clientSignatureCanvas);
+    const counselorHasSignature = isCanvasEmpty(counselorSignatureCanvas);
+    
+    if (!clientHasSignature || !counselorHasSignature) {
+        alert('请完成双方签名后再确认');
+        return;
+    }
+    
+    // 显示预览页面
+    showPreviewPage();
+}
+
+/**
  * 显示主页面
  */
 function showMainPage() {
@@ -185,11 +312,30 @@ function showConsentPage(type) {
     // 显示页面
     hideAllPages();
     showPage('consent-page');
+}
+
+/**
+ * 处理同意/不同意
+ */
+function handleConsent(agreed) {
+    if (agreed) {
+        showSignaturePage();
+    } else {
+        showMainPage();
+    }
+}
+
+/**
+ * 显示签字页面
+ */
+function showSignaturePage() {
+    // 显示页面
+    hideAllPages();
+    showPage('signature-page');
     
-    // 重新调整画布大小
+    // 重新初始化签名画布
     setTimeout(() => {
-        resizeCanvas(clientSignatureCanvas);
-        resizeCanvas(counselorSignatureCanvas);
+        initSignatureCanvases();
     }, 100);
 }
 
@@ -494,6 +640,9 @@ window.addEventListener('resize', function() {
     }
     if (counselorSignatureCanvas) {
         resizeCanvas(counselorSignatureCanvas);
+    }
+    if (landscapeCanvas) {
+        resizeCanvas(landscapeCanvas);
     }
 });
 

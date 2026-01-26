@@ -61,6 +61,7 @@
                     <h3>心理咨询录音、录像知情同意书</h3>
                     <p>为保证我得到更好的服务，并为我的心理咨询师提供反馈，我_______（当事人姓名）允许对我与我的心理咨询师李洋的会谈进行录音或录像。</p>
                     <p><strong>我知晓只有我的心理咨询师和她的督导师会听到/看到这份录音/录像，在督导之后，这份录音/录像将会被删除。</strong>会谈录音/录像不会对我获得的服务产生不良影响。</p>
+                    <p>签字同意：我已阅读并理解且同意以上条款。</p>
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
                     <p>来访者：                              咨询师：</p>
@@ -69,28 +70,61 @@
                 </div>
             </div>
             
-            <div class="signature-section">
-                <h4>签名确认</h4>
-                
-                <div class="signature-container">
-                    <div class="signature-item">
-                        <label>来访签名</label>
+            <div class="consent-buttons">
+                <button class="agree-btn" onclick="handleConsent(true)">同意签署</button>
+                <button class="disagree-btn" onclick="handleConsent(false)">不同意</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 签字页面 -->
+    <div id="signature-page" class="page">
+        <div class="signature-container">
+            <div class="header">
+                <button class="back-btn" onclick="showConsentPage(currentConsentType)">← 返回</button>
+                <h2>签名确认</h2>
+            </div>
+            
+            <div class="signature-content">
+                <!-- 来访者签名 -->
+                <div class="signature-item">
+                    <label>来访者签名</label>
+                    <div class="signature-area">
                         <canvas id="client-signature" class="signature-canvas"></canvas>
-                        <div class="signature-controls">
-                            <button class="control-btn" onclick="clearSignature('client')">清除</button>
-                        </div>
-                    </div>
-                    
-                    <div class="signature-item">
-                        <label>咨询师签名</label>
-                        <canvas id="counselor-signature" class="signature-canvas"></canvas>
-                        <div class="signature-controls">
-                            <button class="control-btn" onclick="clearSignature('counselor')">清除</button>
-                        </div>
+                        <button class="rotate-btn" onclick="openSignatureModal('client')">点击横屏签名</button>
                     </div>
                 </div>
                 
-                <button class="preview-btn" onclick="showPreviewPage()" style="position: fixed !important; bottom: 20px !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100% - 28px) !important; max-width: 300px !important; padding: 14px !important; font-size: 0.9rem !important; margin: 0 !important; min-height: 50px !important; z-index: 9999 !important; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; background: linear-gradient(135deg, #27ae60, #229954) !important; color: white !important; font-weight: 600 !important; border: none !important; border-radius: 8px !important; cursor: pointer !important; text-align: center !important; display: block !important;">预览并导出</button>
+                <!-- 咨询师签名 -->
+                <div class="signature-item">
+                    <label>咨询师签名</label>
+                    <div class="signature-area">
+                        <canvas id="counselor-signature" class="signature-canvas"></canvas>
+                        <button class="rotate-btn" onclick="openSignatureModal('counselor')">点击横屏签名</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="floating-controls">
+                <button class="clear-btn" onclick="clearAllSignatures()">清除</button>
+                <button class="confirm-btn" onclick="confirmSignatures()">确认</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 横屏签名模态框 -->
+    <div id="signature-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>横屏签名</h3>
+                <button class="close-btn" onclick="closeSignatureModal()">×</button>
+            </div>
+            <div class="landscape-signature">
+                <canvas id="landscape-canvas" class="landscape-canvas"></canvas>
+            </div>
+            <div class="modal-controls">
+                <button class="modal-clear-btn" onclick="clearLandscapeSignature()">清除</button>
+                <button class="modal-confirm-btn" onclick="confirmLandscapeSignature()">确认</button>
             </div>
         </div>
     </div>
@@ -99,7 +133,7 @@
     <div id="preview-page" class="page">
         <div class="preview-container">
             <div class="header">
-                <button class="back-btn" onclick="showConsentPage(currentConsentType)">← 返回</button>
+                <button class="back-btn" onclick="showSignaturePage()">← 返回</button>
                 <h2>预览与导出</h2>
             </div>
             
