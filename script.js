@@ -239,9 +239,16 @@ function generatePreviewContent() {
     if (!previewContent) return;
     
     // 获取同意书内容
-    const consentContent = currentConsentType === 'counseling' 
+    let consentContent = currentConsentType === 'counseling' 
         ? document.getElementById('counseling-content').innerHTML
         : document.getElementById('recording-content').innerHTML;
+    
+    // 删除原始HTML中的签名和日期行
+    consentContent = consentContent.replace(/<p>来访者：[\s\u00A0]*咨询师：<\/p>/g, '');
+    consentContent = consentContent.replace(/<p>年[\s\u00A0]+月[\s\u00A0]+日[\s\u00A0]*年[\s\u00A0]+月[\s\u00A0]+日<\/p>/g, '');
+    consentContent = consentContent.replace(/<p>&nbsp;<\/p>/g, '');
+    consentContent = consentContent.replace(/<p>\s*<\/p>/g, '');
+    consentContent = consentContent.replace(/\s+<\/div>$/, '</div>');
     
     // 创建预览HTML，添加内联样式确保标题居中
     let html = `

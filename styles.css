@@ -524,68 +524,240 @@ body {
 }
 
 @media (max-width: 375px) {
-    /* iPhone 6/7/8, iPhone X/XS/11, iPhone 12/13/14 */
+    /* iPhone 6/7/8, iPhone X/XS/11, iPhone 12/13/14, iPhone SE */
     .content-container {
         max-height: 22vh;
         padding: 10px;
     }
     
     .signature-section {
-        min-height: 480px;
-        padding: 16px;
+        min-height: 450px;
+        padding: 14px;
+        padding-bottom: 80px;
+        position: relative;
     }
     
     .signature-item {
         margin-bottom: 10px;
     }
     
+    .signature-container {
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .signature-item label {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    
+    .signature-canvas {
+        height: 80px;
+    }
+    
+    .control-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* 提交按钮固定在底部 - 确保在所有情况下都可见 */
     .preview-btn {
-        padding: 14px;
-        font-size: 0.9rem;
-        margin: 15px auto 5px;
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: calc(100% - 28px) !important;
+        max-width: 300px !important;
+        padding: 14px !important;
+        font-size: 0.9rem !important;
+        margin: 0 !important;
+        min-height: 50px !important;
+        z-index: 9999 !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+        background: linear-gradient(135deg, #27ae60, #229954) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        text-align: center !important;
+        display: block !important;
     }
     
     .preview-content {
-        padding: 20px;
+        padding: 15px;
         max-height: 45vh;
+        padding-bottom: 90px;
+    }
+    
+    .preview-document {
+        padding: 30px 15px !important;
     }
     
     .export-controls {
-        padding: 15px;
+        padding: 12px;
         flex-direction: column;
+        gap: 8px;
+    }
+    
+    .export-btn {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+    
+    /* 通用优化 */
+    .header {
+        padding: 12px;
+    }
+    
+    .header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .back-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 320px) {
-    /* iPhone 5/SE */
+    /* iPhone 5/older SE */
+    /* 主页面优化 */
+    .main-container h1 {
+        font-size: 1.6rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
+    
+    .consent-btn {
+        padding: 16px 32px;
+        font-size: 1rem;
+        min-width: 220px;
+    }
+    
+    /* 同意书页面优化 */
     .content-container {
-        max-height: 20vh;
+        max-height: 15vh;
         padding: 10px;
     }
     
+    .consent-content h3 {
+        font-size: 1.3rem;
+        margin-top: 20px;
+    }
+    
+    .consent-content h4 {
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+    
+    .consent-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    
+    .consent-content ul {
+        margin-left: 15px;
+    }
+    
+    .consent-content li {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
+    
+    /* 签名区域优化 - 确保提交按钮可见 */
     .signature-section {
-        min-height: 460px;
+        min-height: 450px;
         padding: 14px;
+        padding-bottom: 80px;
+        position: relative;
+    }
+    
+    .signature-section h4 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .signature-container {
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .signature-item label {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
     }
     
     .signature-canvas {
-        height: 90px;
+        height: 80px;
     }
     
+    .control-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* 提交按钮固定在底部 - 确保在所有情况下都可见 */
     .preview-btn {
-        padding: 12px;
-        font-size: 0.85rem;
-        margin: 12px auto 5px;
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: calc(100% - 28px) !important;
+        max-width: 300px !important;
+        padding: 14px !important;
+        font-size: 0.9rem !important;
+        margin: 0 !important;
+        min-height: 50px !important;
+        z-index: 9999 !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+        background: linear-gradient(135deg, #27ae60, #229954) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        text-align: center !important;
+        display: block !important;
+    }
+    
+    /* 预览页面优化 */
+    .header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .back-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
     }
     
     .preview-content {
         padding: 15px;
-        max-height: 40vh;
+        max-height: 35vh;
+        padding-bottom: 90px;
+    }
+    
+    .preview-document {
+        padding: 30px 15px !important;
     }
     
     .export-controls {
         padding: 12px;
         flex-direction: column;
+        gap: 8px;
+    }
+    
+    .export-btn {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+    
+    /* 通用优化 */
+    .header {
+        padding: 12px;
     }
 }
 
