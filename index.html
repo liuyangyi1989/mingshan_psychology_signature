@@ -59,7 +59,7 @@
                 <!-- 录音录像知情同意书 -->
                 <div id="recording-content" class="consent-content">
                     <h3>心理咨询录音、录像知情同意书</h3>
-                    <p>为保证我得到更好的服务，并为我的心理咨询师提供反馈，我_______（当事人姓名）允许对我与我的心理咨询师李洋的会谈进行录音或录像。</p>
+                    <p>为保证我得到更好的服务，并为我的心理咨询师提供反馈，我<span class="signature-placeholder">_______</span>（当事人姓名）允许对我与我的心理咨询师李洋的会谈进行录音或录像。</p>
                     <p><strong>我知晓只有我的心理咨询师和她的督导师会听到/看到这份录音/录像，在督导之后，这份录音/录像将会被删除。</strong>会谈录音/录像不会对我获得的服务产生不良影响。</p>
                     <p>签字同意：我已阅读并理解且同意以上条款。</p>
                     <p>&nbsp;</p>
@@ -94,19 +94,10 @@
                         <button class="rotate-btn" onclick="openSignatureModal('client')">点击横屏签名</button>
                     </div>
                 </div>
-                
-                <!-- 咨询师签名 -->
-                <div class="signature-item">
-                    <label>咨询师签名</label>
-                    <div class="signature-area">
-                        <canvas id="counselor-signature" class="signature-canvas"></canvas>
-                        <button class="rotate-btn" onclick="openSignatureModal('counselor')">点击横屏签名</button>
-                    </div>
-                </div>
             </div>
             
             <div class="floating-controls">
-                <button class="clear-btn" onclick="clearAllSignatures()">清除</button>
+                <button class="clear-btn" onclick="clearSignature('client')">清除</button>
                 <button class="confirm-btn" onclick="confirmSignatures()">确认</button>
             </div>
         </div>
