@@ -376,7 +376,13 @@ function showPreviewPage() {
             <div class="preview-document" style="background: white; padding: 50px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto;">
                 <style>
                     h3 { text-align: center !important; margin-top: 30px !important; }
+                    .header-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; }
+                    .header-logos img { max-height: 60px; max-width: 45%; height: auto; width: auto; }
                 </style>
+                <div class="header-logos">
+                    <img src="logo1.png" alt="Logo 1">
+                    <img src="logo2.png" alt="Logo 2">
+                </div>
                 ${processedContent}
                 
                 <div style="margin-top: 60px; display: flex; justify-content: space-between;">
@@ -474,7 +480,13 @@ function generatePreviewContent() {
             <div class="preview-document" style="background: white; padding: 50px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto;">
                 <style>
                     h3 { text-align: center !important; margin-top: 30px !important; }
+                    .header-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; }
+                    .header-logos img { max-height: 60px; max-width: 45%; height: auto; width: auto; }
                 </style>
+                <div class="header-logos">
+                    <img src="logo1.png" alt="Logo 1">
+                    <img src="logo2.png" alt="Logo 2">
+                </div>
                 ${consentContent}
                 
                 <div style="margin-top: 60px; display: flex; justify-content: space-between;">
